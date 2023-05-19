@@ -36,7 +36,7 @@ void play_game(int max_number)
         int number = random_value(max_number);
 
         std::cout << "Please enter your name:" << std::endl;
-        std::cin >> player_name;
+        std::getline(std::cin, player_name); //use std::getline for names with spaces
 
         while (guess_func(number)) attempt++;
         std::cout << "attempts = " << attempt << std::endl;

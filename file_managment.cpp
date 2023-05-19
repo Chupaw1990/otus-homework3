@@ -1,4 +1,5 @@
 #include "file_managment.h"
+#include <algorithm>
 
 
 void write_score(std::string& player_name, int& attempts) {
@@ -57,14 +58,22 @@ std::map<std::string,int> read_score_in_map(){
     }
 
     std::string username;
-    int attempts;
+    std::string attempts;
 
     while (true){
         file >> username;
         file >> attempts;
+
+        //if the string <attempts> is not numeric add it to string <username> with a space
+        while (!std::all_of(attempts.begin(),attempts.end(), ::isdigit))
+        {
+            username += ' ' + attempts;
+            file >> attempts;
+        }
+
         file.ignore();
 
-        map_score.insert(make_pair(username, attempts));
+        map_score.insert(make_pair(username, std::stoi(attempts)));
 
         if (file.fail()) {
             break;
